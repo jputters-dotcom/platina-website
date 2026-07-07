@@ -1,0 +1,49 @@
+---
+import { content } from '../data/en';
+const { strategies } = content;
+---
+
+<section id="strategies" class="section strategies">
+  <div class="container container--wide">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{strategies.eyebrow}</p>
+      <h2 class="h2">{strategies.title}</h2>
+      <p class="lead">{strategies.intro}</p>
+    </div>
+
+    <ul class="strat-list">
+      {strategies.items.map((s, i) => (
+        <li class="strat" data-reveal style={`--i: ${i}`}>
+          <div class="strat__head">
+            <span class="index-no">{s.no}</span>
+            <h3 class="h3 strat__name">{s.name}</h3>
+          </div>
+          <p class="strat__text">{s.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .strat {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(1rem, 4vw, 4rem);
+    padding-block: clamp(2rem, 3.5vw, 3.4rem);
+    border-top: 1px solid var(--line);
+    align-items: start;
+    transition: background 0.4s var(--ease);
+  }
+  .strat:last-child { border-bottom: 1px solid var(--line); }
+  .strat:hover { background: linear-gradient(to right, rgba(60, 127, 112, 0.05), transparent 70%); }
+
+  .strat__head { display: flex; gap: clamp(1rem, 2vw, 1.75rem); align-items: baseline; }
+  .strat__name { color: var(--navy); transition: color 0.4s var(--ease); }
+  .strat:hover .strat__name { color: var(--petrol); }
+  .strat__text { color: var(--muted); max-width: 48ch; }
+
+  @media (max-width: 780px) {
+    .strat { grid-template-columns: 1fr; gap: 1rem; }
+  }
+</style>

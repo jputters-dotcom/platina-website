@@ -1,0 +1,101 @@
+---
+import { content } from '../data/en';
+const { portfolio } = content;
+---
+
+<section id="portfolio" class="section section--dark portfolio">
+  <div class="container container--wide">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{portfolio.eyebrow}</p>
+      <h2 class="h2">{portfolio.title}</h2>
+      <p class="lead">{portfolio.intro}</p>
+    </div>
+
+    <div class="portfolio__grid">
+      <blockquote class="portfolio__quote" data-reveal>
+        <span class="portfolio__mark" aria-hidden="true">&ldquo;</span>
+        <p>{portfolio.quote.text}</p>
+        <cite>{portfolio.quote.author}</cite>
+      </blockquote>
+
+      <ul class="portfolio__list" data-reveal style="--i: 1">
+        {portfolio.items.map((c) => (
+          <li class="pf-item">
+            <span class="pf-item__name">{c.name}</span>
+            <span class="pf-item__sector">{c.sector}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .portfolio__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: start;
+  }
+  .portfolio__quote { position: relative; padding-top: 1.5rem; }
+  .portfolio__mark {
+    position: absolute;
+    top: -1.5rem;
+    left: -0.2rem;
+    font-family: var(--font-serif);
+    font-size: 6rem;
+    line-height: 1;
+    color: var(--olive);
+    opacity: 0.55;
+  }
+  .portfolio__quote p {
+    font-family: var(--font-serif);
+    font-weight: 340;
+    font-style: italic;
+    font-size: clamp(1.4rem, 1rem + 1.7vw, 2.15rem);
+    line-height: 1.32;
+    letter-spacing: -0.01em;
+    color: #fff;
+    max-width: 24ch;
+  }
+  .portfolio__quote cite {
+    display: block;
+    margin-top: 1.75rem;
+    font-style: normal;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-dark);
+  }
+
+  .pf-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: clamp(1rem, 1.6vw, 1.4rem);
+    border-top: 1px solid var(--line-dark);
+  }
+  .pf-item:last-child { border-bottom: 1px solid var(--line-dark); }
+  .pf-item__name {
+    font-family: var(--font-serif);
+    font-weight: 360;
+    font-size: clamp(1.4rem, 1rem + 1.4vw, 2rem);
+    letter-spacing: -0.01em;
+    color: #fff;
+    transition: color 0.4s var(--ease);
+  }
+  .pf-item:hover .pf-item__name { color: var(--olive); }
+  .pf-item__sector {
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-dark);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 860px) {
+    .portfolio__grid { grid-template-columns: 1fr; gap: 3rem; }
+    .portfolio__quote { padding-top: 2rem; }
+  }
+</style>

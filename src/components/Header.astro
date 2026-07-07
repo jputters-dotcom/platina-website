@@ -1,0 +1,50 @@
+---
+import { content } from '../data/en';
+import logo from '../assets/platina-logo.png';
+
+const { nav, cta, languages, brand } = content;
+const mobileLinks = [...nav, cta];
+---
+
+<header class="site-header">
+  <div class="container container--wide site-header__inner">
+    <a class="logo" href="#top" aria-label={`${brand.name} — home`}>
+      <img src={logo.src} width={logo.width} height={logo.height} alt={brand.name} />
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="site-nav__links">
+        {nav.map((item) => (
+          <li><a class="nav-link" href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang" aria-label="Language">
+        {languages.map((l, i) => (
+          <>
+            {i > 0 && <span class="sep">/</span>}
+            <a href={l.href} class={l.active ? 'is-active' : ''} aria-current={l.active ? 'true' : undefined}>{l.label}</a>
+          </>
+        ))}
+      </div>
+      <a class="btn btn--primary btn--sm" href={cta.href}>{cta.label}</a>
+      <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu" data-nav>
+  <nav class="mobile-menu__links" aria-label="Mobile">
+    {mobileLinks.map((item) => (
+      <a href={item.href}>{item.label}</a>
+    ))}
+  </nav>
+  <div class="mobile-menu__meta">
+    <span>London · Paris · Luxembourg</span>
+    <span>Est. 2002</span>
+  </div>
+</div>

@@ -1,0 +1,188 @@
+---
+import { content } from '../data/en';
+const { hero } = content;
+---
+
+<section id="top" class="hero section--dark" aria-label="Introduction">
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__grid"></div>
+    <svg class="hero__arc" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="300" cy="300" r="298" stroke="currentColor" stroke-width="1" />
+      <circle cx="300" cy="300" r="210" stroke="currentColor" stroke-width="1" opacity="0.6" />
+    </svg>
+  </div>
+
+  <div class="container container--wide hero__inner">
+    <p class="eyebrow hero__eyebrow">{hero.eyebrow}</p>
+
+    <h1 class="display hero__title">
+      <span class="line"><span>{hero.headlineLead}</span></span>
+      <span class="line"><span>{hero.headlineAccent}</span></span>
+    </h1>
+
+    <p class="lead hero__lead">{hero.lead}</p>
+
+    <div class="hero__actions">
+      <a class="btn btn--primary" href={hero.primary.href}>
+        {hero.primary.label}
+        <span class="arrow" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="btn btn--ghost" href={hero.secondary.href}>{hero.secondary.label}</a>
+    </div>
+
+    <div class="hero__meta">
+      <div class="hero__meta-items">
+        {hero.meta.map((m) => <span>{m}</span>)}
+      </div>
+      <a class="hero__scroll" href="#dna" aria-label="Scroll to content">
+        <span>Scroll</span>
+        <span class="hero__scroll-line" aria-hidden="true"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: end;
+    padding-top: clamp(7rem, 12vh, 10rem);
+    padding-bottom: clamp(2.5rem, 5vh, 4rem);
+    overflow: hidden;
+    background:
+      radial-gradient(120% 95% at 88% 6%, rgba(0, 84, 123, 0.45), transparent 58%),
+      radial-gradient(95% 85% at 4% 104%, rgba(60, 127, 112, 0.3), transparent 55%),
+      var(--navy-deep);
+  }
+
+  .hero__bg { position: absolute; inset: 0; pointer-events: none; }
+  .hero__grid {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      to right,
+      transparent 0,
+      transparent calc(100% / 6 - 1px),
+      rgba(255, 255, 255, 0.05) calc(100% / 6 - 1px),
+      rgba(255, 255, 255, 0.05) calc(100% / 6)
+    );
+    mask-image: linear-gradient(to bottom, transparent, #000 30%);
+  }
+  .hero__arc {
+    position: absolute;
+    right: -14%;
+    top: 8%;
+    width: min(56vw, 640px);
+    height: auto;
+    color: var(--olive);
+    opacity: 0.16;
+    animation: heroSpin 90s linear infinite;
+  }
+  @keyframes heroSpin { to { transform: rotate(360deg); } }
+
+  .hero__inner { position: relative; width: 100%; }
+
+  .hero__eyebrow {
+    opacity: 0;
+    animation: fadeUp 0.9s var(--ease) 0.05s forwards;
+    margin-bottom: 1.6rem;
+  }
+
+  .hero__title { margin-bottom: clamp(1.6rem, 3vw, 2.4rem); max-width: 15ch; }
+  .hero__title .line { display: block; overflow: hidden; padding-bottom: 0.04em; }
+  .hero__title .line > span {
+    display: block;
+    transform: translateY(110%);
+    animation: riseIn 1.05s var(--ease) forwards;
+  }
+  .hero__title .line:nth-child(1) > span { animation-delay: 0.18s; }
+  .hero__title .line:nth-child(2) > span { animation-delay: 0.32s; color: #fff; }
+  .hero__title .line:nth-child(2) > span::after {
+    content: '';
+    display: inline-block;
+    width: 0.16em;
+    height: 0.16em;
+    margin-left: 0.06em;
+    border-radius: 50%;
+    background: var(--olive);
+    vertical-align: baseline;
+  }
+
+  .hero__lead {
+    max-width: 46ch;
+    color: rgba(255, 255, 255, 0.78);
+    opacity: 0;
+    animation: fadeUp 0.9s var(--ease) 0.5s forwards;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: clamp(2rem, 3.5vw, 2.75rem);
+    opacity: 0;
+    animation: fadeUp 0.9s var(--ease) 0.64s forwards;
+  }
+
+  .hero__meta {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: clamp(3rem, 7vw, 6rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-dark);
+    opacity: 0;
+    animation: fadeUp 0.9s var(--ease) 0.8s forwards;
+  }
+  .hero__meta-items {
+    display: flex;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.62);
+    text-transform: uppercase;
+  }
+  .hero__scroll {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.62);
+    transition: color 0.3s;
+  }
+  .hero__scroll:hover { color: #fff; }
+  .hero__scroll-line {
+    position: relative;
+    width: 44px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.25);
+    overflow: hidden;
+  }
+  .hero__scroll-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--olive);
+    transform: translateX(-100%);
+    animation: scrollNudge 2.4s var(--ease) infinite;
+  }
+
+  @keyframes riseIn { to { transform: none; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes scrollNudge {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(0); }
+    100% { transform: translateX(100%); }
+  }
+
+  @media (max-width: 600px) {
+    .hero__meta { flex-direction: column; align-items: flex-start; }
+  }
+</style>

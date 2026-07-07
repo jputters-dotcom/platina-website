@@ -1,0 +1,64 @@
+---
+import { content } from '../data/en';
+const { sectors } = content;
+---
+
+<section id="sectors" class="section section--sand sectors">
+  <div class="container container--wide">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{sectors.eyebrow}</p>
+      <h2 class="h2">{sectors.title}</h2>
+      <p class="lead">{sectors.intro}</p>
+    </div>
+
+    <ul class="sector-grid">
+      {sectors.items.map((s, i) => (
+        <li class="sector" data-reveal style={`--i: ${i}`}>
+          <div class="sector__top">
+            <span class="index-no">{s.no}</span>
+            <span class="sector__mark" aria-hidden="true"></span>
+          </div>
+          <h3 class="h3 sector__name">{s.name}</h3>
+          <p class="sector__text">{s.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .sector-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(0.75rem, 1.4vw, 1.25rem);
+  }
+  .sector {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 2vw, 2rem);
+    min-height: 220px;
+    display: grid;
+    gap: 0.85rem;
+    align-content: start;
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s var(--ease);
+  }
+  .sector:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-soft);
+    border-color: rgba(60, 127, 112, 0.5);
+  }
+  .sector__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+  .sector__mark { width: 1.75rem; height: 1px; background: var(--line-strong); transition: width 0.5s var(--ease), background 0.5s; }
+  .sector:hover .sector__mark { width: 2.75rem; background: var(--green); }
+  .sector__name { color: var(--navy); }
+  .sector__text { color: var(--muted); font-size: 0.95rem; }
+
+  @media (max-width: 960px) {
+    .sector-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .sector-grid { grid-template-columns: 1fr; }
+    .sector { min-height: 0; }
+  }
+</style>

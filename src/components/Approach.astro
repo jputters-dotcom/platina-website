@@ -1,0 +1,46 @@
+---
+import { content } from '../data/en';
+const { approach } = content;
+---
+
+<section id="approach" class="section approach">
+  <div class="container container--wide">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{approach.eyebrow}</p>
+      <h2 class="h2">{approach.title}</h2>
+    </div>
+
+    <ul class="approach-grid">
+      {approach.items.map((p, i) => (
+        <li class="pillar" data-reveal style={`--i: ${i}`}>
+          <span class="index-no">{p.no}</span>
+          <h3 class="h3 pillar__name">{p.name}</h3>
+          <p class="pillar__text">{p.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 3.5vw, 3.5rem);
+  }
+  .pillar {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--line-strong);
+  }
+  .pillar__name { color: var(--navy); }
+  .pillar__text { color: var(--muted); max-width: 40ch; }
+
+  @media (max-width: 820px) {
+    .approach-grid { grid-template-columns: 1fr; gap: 0; }
+    .pillar { padding-block: 1.75rem; }
+    .pillar:not(:last-child) { border-bottom: 0; }
+  }
+</style>

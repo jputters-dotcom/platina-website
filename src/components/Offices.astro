@@ -1,0 +1,56 @@
+---
+import { content } from '../data/en';
+const { offices } = content;
+---
+
+<section id="offices" class="section section--sand offices">
+  <div class="container container--wide">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{offices.eyebrow}</p>
+      <h2 class="h2">{offices.title}</h2>
+    </div>
+
+    <ul class="offices-grid">
+      {offices.items.map((o, i) => (
+        <li class="office" data-reveal style={`--i: ${i}`}>
+          <div class="office__top">
+            <h3 class="h3 office__city">{o.city}</h3>
+            <span class="office__dot" aria-hidden="true"></span>
+          </div>
+          <address class="office__lines">
+            {o.lines.map((l) => <span>{l}</span>)}
+          </address>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .offices-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+  .office {
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--line-strong);
+    display: grid;
+    gap: 1.1rem;
+  }
+  .office__top { display: flex; align-items: center; justify-content: space-between; }
+  .office__city { color: var(--navy); }
+  .office__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+  .office__lines {
+    font-style: normal;
+    display: grid;
+    gap: 0.15rem;
+    color: var(--muted);
+    font-size: 0.98rem;
+  }
+
+  @media (max-width: 760px) {
+    .offices-grid { grid-template-columns: 1fr; gap: 0; }
+    .office { padding-block: 1.6rem; }
+  }
+</style>

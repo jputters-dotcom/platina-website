@@ -1,0 +1,52 @@
+---
+import { content } from '../data/en';
+const { stats } = content;
+---
+
+<section class="section section--dark section--tight stats" aria-label={stats.eyebrow}>
+  <div class="container container--wide">
+    <ul class="stats__grid">
+      {stats.items.map((s, i) => (
+        <li class="stat" data-reveal style={`--i: ${i}`}>
+          <span class="stat__value">{s.value}</span>
+          <span class="stat__label">{s.label}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .stats__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .stat {
+    padding: 0.5rem clamp(1rem, 2.5vw, 2.25rem);
+    display: grid;
+    gap: 0.6rem;
+    border-left: 1px solid var(--line-dark);
+  }
+  .stat:first-child { border-left: 0; padding-left: 0; }
+  .stat__value {
+    font-family: var(--font-serif);
+    font-weight: 340;
+    font-size: clamp(2.4rem, 1.4rem + 3.4vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .stat__label {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-dark);
+  }
+
+  @media (max-width: 720px) {
+    .stats__grid { grid-template-columns: repeat(2, 1fr); gap: 2.25rem 0; }
+    .stat:nth-child(odd) { border-left: 0; padding-left: 0; }
+    .stat:nth-child(3), .stat:nth-child(4) { padding-top: 2.25rem; border-top: 1px solid var(--line-dark); }
+    .stat:nth-child(3) { padding-left: 0; }
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+import { content } from '../data/en';
+const { dna } = content;
+---
+
+<section id="dna" class="section dna">
+  <div class="container container--wide">
+    <p class="eyebrow" data-reveal>{dna.eyebrow}</p>
+    <div class="dna__grid">
+      <p class="dna__statement h2" data-reveal style="--i: 1">{dna.statement}</p>
+      <div class="dna__body" data-reveal style="--i: 2">
+        <p>{dna.body}</p>
+        <a class="link-underline" href="#approach">Our approach <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dna .eyebrow { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .dna__grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: clamp(1.75rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+  .dna__statement {
+    grid-column: 1 / span 8;
+    color: var(--navy);
+    max-width: 22ch;
+  }
+  .dna__body {
+    grid-column: 9 / span 4;
+    margin-top: 0.6rem;
+    display: grid;
+    gap: 1.75rem;
+    justify-items: start;
+    color: var(--muted);
+  }
+
+  @media (max-width: 900px) {
+    .dna__statement { grid-column: 1 / -1; max-width: 26ch; }
+    .dna__body { grid-column: 1 / -1; max-width: 52ch; }
+  }
+</style>
