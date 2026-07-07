@@ -1,11 +1,25 @@
 ---
+import { Picture } from 'astro:assets';
 import { content } from '../data/en';
+import heroPhoto from '../assets/hero-london.jpg';
 const { hero } = content;
 ---
 
 <section id="top" class="hero section--dark" aria-label="Introduction">
+  <Picture
+    class="hero__photo"
+    src={heroPhoto}
+    formats={['webp']}
+    fallbackFormat="jpg"
+    alt=""
+    widths={[768, 1280, 1920]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+    aria-hidden="true"
+  />
+  <div class="hero__scrim" aria-hidden="true"></div>
   <div class="hero__bg" aria-hidden="true">
-    <div class="hero__grid"></div>
     <svg class="hero__arc" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="300" cy="300" r="298" stroke="currentColor" stroke-width="1" />
       <circle cx="300" cy="300" r="210" stroke="currentColor" stroke-width="1" opacity="0.6" />
@@ -51,25 +65,40 @@ const { hero } = content;
     padding-top: clamp(7rem, 12vh, 10rem);
     padding-bottom: clamp(2.5rem, 5vh, 4rem);
     overflow: hidden;
-    background:
-      radial-gradient(120% 95% at 88% 6%, rgba(0, 84, 123, 0.45), transparent 58%),
-      radial-gradient(95% 85% at 4% 104%, rgba(60, 127, 112, 0.3), transparent 55%),
-      var(--navy-deep);
+    background: var(--navy-deep);
+    isolation: isolate;
   }
 
-  .hero__bg { position: absolute; inset: 0; pointer-events: none; }
-  .hero__grid {
+  /* Photo de fond (skyline Londres, crepuscule) */
+  .hero__photo {
     position: absolute;
     inset: 0;
-    background-image: repeating-linear-gradient(
-      to right,
-      transparent 0,
-      transparent calc(100% / 6 - 1px),
-      rgba(255, 255, 255, 0.05) calc(100% / 6 - 1px),
-      rgba(255, 255, 255, 0.05) calc(100% / 6)
-    );
-    mask-image: linear-gradient(to bottom, transparent, #000 30%);
+    z-index: -3;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 40% center;
+    filter: saturate(0.9) brightness(0.86) contrast(1.03);
+    animation: heroPhotoIn 1.8s var(--ease) both;
   }
+  @keyframes heroPhotoIn {
+    from { opacity: 0; transform: scale(1.06); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* Voile navy : sombre a gauche (lisibilite du texte), plus clair a droite (la ville transparait) */
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(120% 95% at 88% 6%, rgba(0, 84, 123, 0.34), transparent 56%),
+      radial-gradient(95% 85% at 4% 104%, rgba(60, 127, 112, 0.24), transparent 55%),
+      linear-gradient(103deg, rgba(22, 27, 51, 0.95) 0%, rgba(22, 27, 51, 0.88) 36%, rgba(22, 27, 51, 0.62) 74%, rgba(22, 27, 51, 0.5) 100%),
+      linear-gradient(to top, rgba(22, 27, 51, 0.72), transparent 32%);
+  }
+
+  .hero__bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
   .hero__arc {
     position: absolute;
     right: -14%;
@@ -77,12 +106,12 @@ const { hero } = content;
     width: min(56vw, 640px);
     height: auto;
     color: var(--olive);
-    opacity: 0.16;
+    opacity: 0.14;
     animation: heroSpin 90s linear infinite;
   }
   @keyframes heroSpin { to { transform: rotate(360deg); } }
 
-  .hero__inner { position: relative; width: 100%; }
+  .hero__inner { position: relative; z-index: 1; width: 100%; }
 
   .hero__eyebrow {
     opacity: 0;
@@ -112,7 +141,7 @@ const { hero } = content;
 
   .hero__lead {
     max-width: 46ch;
-    color: rgba(255, 255, 255, 0.78);
+    color: rgba(255, 255, 255, 0.82);
     opacity: 0;
     animation: fadeUp 0.9s var(--ease) 0.5s forwards;
   }
@@ -144,7 +173,7 @@ const { hero } = content;
     flex-wrap: wrap;
     font-size: 0.82rem;
     letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.62);
+    color: rgba(255, 255, 255, 0.66);
     text-transform: uppercase;
   }
   .hero__scroll {
@@ -154,7 +183,7 @@ const { hero } = content;
     font-size: 0.72rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.62);
+    color: rgba(255, 255, 255, 0.66);
     transition: color 0.3s;
   }
   .hero__scroll:hover { color: #fff; }
@@ -162,7 +191,7 @@ const { hero } = content;
     position: relative;
     width: 44px;
     height: 1px;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.28);
     overflow: hidden;
   }
   .hero__scroll-line::after {
@@ -182,7 +211,17 @@ const { hero } = content;
     100% { transform: translateX(100%); }
   }
 
-  @media (max-width: 600px) {
+  /* Sur mobile, le texte occupe toute la largeur : on renforce le voile pour la lisibilite */
+  @media (max-width: 700px) {
+    .hero__scrim {
+      background:
+        radial-gradient(90% 60% at 80% 0%, rgba(0, 84, 123, 0.3), transparent 60%),
+        linear-gradient(180deg, rgba(22, 27, 51, 0.82) 0%, rgba(22, 27, 51, 0.9) 100%);
+    }
     .hero__meta { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__photo { animation: none; }
   }
 </style>
