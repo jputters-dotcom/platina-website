@@ -46,15 +46,29 @@ citation portefeuille, e-mail de contact, mention réglementaire FCA.
 2. Créer une route `src/pages/fr/index.astro` important `fr.ts`.
 3. Brancher le sélecteur EN/FR (champ `languages` du contenu) sur les deux routes.
 
-## Déploiement
+## Déploiement (Vercel)
 
-Chaque push sur `main` déclenche le workflow `.github/workflows/deploy.yml` :
-build Astro puis publication sur GitHub Pages.
+Le code est hébergé sur un dépôt GitHub privé et déployé sur Vercel.
 
-URL de préview : `https://jputters-dotcom.github.io/platina-website/`
+Mise en place (une fois) :
+
+1. Sur [vercel.com](https://vercel.com) : « Add New… > Project ».
+2. Importer le dépôt privé `platina-website` (autoriser Vercel à y accéder).
+3. Vercel détecte Astro automatiquement (build `astro build`, sortie `dist/`).
+   Aucune variable d'environnement n'est requise. Cliquer sur « Deploy ».
+4. Chaque push sur `main` redéploie ensuite automatiquement.
+
+Après le premier déploiement, reporter l'URL Vercel dans `astro.config.mjs`
+(champ `site`) pour des URLs canoniques et Open Graph correctes.
 
 ### Brancher le domaine platinapartners.com
 
-1. Ajouter un fichier `public/CNAME` contenant `www.platinapartners.com`.
-2. Dans `astro.config.mjs`, passer `base` à `'/'` et `site` au domaine final.
-3. Configurer les DNS du domaine vers GitHub Pages.
+1. Dans le projet Vercel : « Settings > Domains », ajouter `www.platinapartners.com`.
+2. Suivre les instructions DNS de Vercel (enregistrement CNAME).
+3. Mettre `site` à `https://www.platinapartners.com` dans `astro.config.mjs`.
+
+### Alternative : GitHub Pages
+
+Le site peut aussi être publié sur GitHub Pages (dépôt public requis sur un
+plan gratuit) : remettre `base: '/platina-website'` dans `astro.config.mjs` et
+ajouter un workflow `withastro/action`. Voir l'historique Git pour le modèle.
