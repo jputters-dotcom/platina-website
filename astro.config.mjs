@@ -1,13 +1,14 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Deploiement Vercel (depuis le depot GitHub prive). Le site est servi a la
-// racine du domaine, donc base = '/'.
-// `site` : mettre l'URL de production une fois connue (URL Vercel, puis a terme
-// https://www.platinapartners.com). Sert uniquement aux URLs canoniques / OG.
+// Deploiement GitHub Pages (site de projet) :
+//   https://jputters-dotcom.github.io/platina-website/
+// D'ou base = '/platina-website'.
+// Quand le domaine platinapartners.com sera branche : repasser base a '/',
+// mettre `site` au domaine final, et ajouter public/CNAME.
 export default defineConfig({
-  site: 'https://platina-website.vercel.app',
-  base: '/',
+  site: 'https://jputters-dotcom.github.io',
+  base: '/platina-website',
   trailingSlash: 'ignore',
   build: {
     inlineStylesheets: 'auto',

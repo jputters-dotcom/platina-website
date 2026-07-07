@@ -46,29 +46,24 @@ citation portefeuille, e-mail de contact, mention réglementaire FCA.
 2. Créer une route `src/pages/fr/index.astro` important `fr.ts`.
 3. Brancher le sélecteur EN/FR (champ `languages` du contenu) sur les deux routes.
 
-## Déploiement (Vercel)
+## Déploiement (GitHub Pages)
 
-Le code est hébergé sur un dépôt GitHub privé et déployé sur Vercel.
+Le code est hébergé sur un dépôt GitHub public et publié via GitHub Pages.
+Chaque push sur `main` déclenche le workflow `.github/workflows/deploy.yml`
+(build Astro puis publication), sans action manuelle.
 
-Mise en place (une fois) :
+URL de production : `https://jputters-dotcom.github.io/platina-website/`
 
-1. Sur [vercel.com](https://vercel.com) : « Add New… > Project ».
-2. Importer le dépôt privé `platina-website` (autoriser Vercel à y accéder).
-3. Vercel détecte Astro automatiquement (build `astro build`, sortie `dist/`).
-   Aucune variable d'environnement n'est requise. Cliquer sur « Deploy ».
-4. Chaque push sur `main` redéploie ensuite automatiquement.
-
-Après le premier déploiement, reporter l'URL Vercel dans `astro.config.mjs`
-(champ `site`) pour des URLs canoniques et Open Graph correctes.
+La source Pages est réglée sur « GitHub Actions » (Settings > Pages).
 
 ### Brancher le domaine platinapartners.com
 
-1. Dans le projet Vercel : « Settings > Domains », ajouter `www.platinapartners.com`.
-2. Suivre les instructions DNS de Vercel (enregistrement CNAME).
-3. Mettre `site` à `https://www.platinapartners.com` dans `astro.config.mjs`.
+1. Ajouter un fichier `public/CNAME` contenant `www.platinapartners.com`.
+2. Dans `astro.config.mjs`, passer `base` à `'/'` et `site` au domaine final.
+3. Configurer les DNS du domaine vers GitHub Pages, puis renseigner le domaine
+   dans Settings > Pages.
 
-### Alternative : GitHub Pages
+### Alternative : Vercel
 
-Le site peut aussi être publié sur GitHub Pages (dépôt public requis sur un
-plan gratuit) : remettre `base: '/platina-website'` dans `astro.config.mjs` et
-ajouter un workflow `withastro/action`. Voir l'historique Git pour le modèle.
+Le site peut aussi être déployé sur Vercel (import du dépôt) : repasser
+`base` à `'/'` dans `astro.config.mjs`. Vercel détecte Astro automatiquement.
